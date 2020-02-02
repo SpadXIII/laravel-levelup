@@ -85,7 +85,7 @@ If we didn't know anything past what we've already discussed, I'd have posited t
 That's a really natural thing to assume, given what most folks know about web servers, but it wouldn't be correct (or practical) in this context. In most of what we do in a framework app, we're not dealing with the file system as much as the database, so when we create a new monster with an ID of 5, we're *not* writing new directories. We've added a new record to the database, and have used some of the framework magic to just make it look like we wrote new directories. 
 
 So the next question is - wait, what? How is that possible? Everything I understood about URL paths implied directories and files. 
-
+,
 Bear with me - this sounds way more confusing than it is. 
 
 You already learned about `GET` requests and `POST` requests. AND (most importantly) you learned that `GET` is for showing and `POST` is for changing. Which means that you should hopefully see by now that when we're trying to show a monster with an ID of 5, the request is *still* a `GET`, even though it doesn't have a bunch of extra stuff (like `monster?id=5`) tacked onto the URL.
@@ -109,7 +109,7 @@ Let's make an HTML form field for the monster's name, called `name`, submit that
         \Log::debug($request); // <-- THIS will show you in your log files what was posted
 
         // if the save didn't work
-        if ($monster->save()) {
+        if (!$monster->save()) {
             return redirect()->with('errors', 'That save didn't work.');
         }
         
@@ -159,7 +159,7 @@ And now the `POST` handler in the controller:
         $monster->fill($request->all());
 
         // if the save didn't work
-        if ($monster->save()) {
+        if (!$monster->save()) {
             return redirect()->with('errors', 'That save didn't work.');
         }
         
